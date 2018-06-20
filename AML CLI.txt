@@ -1,0 +1,16 @@
+# login
+az login
+
+# subscription
+az account list
+az account set -s <subscription id>
+
+# resource group
+az group list
+az group create -l (region) -n (resourceGroup)
+
+# AML service
+az ml account experimentation create -n <experimentation name> -g <resource group name>
+
+# namespace register
+az provider register --namespace <namespace ex. Microsoft.Storage>
