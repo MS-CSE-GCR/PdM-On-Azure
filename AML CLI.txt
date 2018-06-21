@@ -14,3 +14,4 @@ az ml account experimentation create -n <experimentation name> -g <resource grou
 
 # namespace register
 az provider register --namespace <namespace ex. Microsoft.Storage>
+az provider show -n <namespace>
