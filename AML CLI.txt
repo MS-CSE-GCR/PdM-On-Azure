@@ -11,7 +11,30 @@ az group create -l (region) -n (resourceGroup)
 
 # AML service
 az ml account experimentation create -n <experimentation name> -g <resource group name>
+az ml env setup -n <new deployment environment name> -l <e.g. eastus2> -g <resource group name> -c (for cluster mode)
+az ml env show -n <deployment environment name> -g <existing resource group name>
+az ml account modelmanagement create --location <e.g. eastus2> -n <new model management account name> -g <existing resource group name> --sku-name S1
+az ml account modelmanagement set -n <youracctname> -g <yourresourcegroupname>
+az ml env set -n <deployment environment name> -g <existing resource group name>
+az ml env show
+
+## Create real-time web service
+az ml model register --model model.pkl --name model.pkl
+az ml manifest create --manifest-name <new manifest name> -f score_iris.py -r python -i <model ID> -s service_schema.json -c aml_config\conda_dependencies.yml
+az ml image create -n irisimage --manifest-id <manifest ID>
 
 # namespace register
 az provider register --namespace <namespace ex. Microsoft.Storage>
 az provider show -n <namespace>
+az provider list --query "[].{Provider:namespace, Status:registrationState}" --out table 
+
+
+# IoT
+## IoT Hub
+az iot hub create --resource-group <resource group name> --name <iot hub name> --sku F1
+
+# ACR
+Username = mlcrpacrc5836181bd9e
+PWD = 0V3YX+mTwI5QUdCkH9KWxryH9XOhXUjw
+PWD2 = wkV0qPa4icfH1S/Qd41wpRAL1rwl6iea
+Server = mlcrpacrc5836181bd9e.azurecr.io
