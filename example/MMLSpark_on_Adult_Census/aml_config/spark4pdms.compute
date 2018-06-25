@@ -1,0 +1,6 @@
+address: spark4pdms-ssh.azurehdinsight.net
+password: AzureMlSecret=58b905b6-c896-81e1-bd8a-a1e7df642913
+type: cluster
+userManagedEnvironment: false
+username: sshuser
+yarnDeployMode: cluster

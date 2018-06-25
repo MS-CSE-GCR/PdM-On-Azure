@@ -38,3 +38,7 @@ Username = mlcrpacrc5836181bd9e
 PWD = 0V3YX+mTwI5QUdCkH9KWxryH9XOhXUjw
 PWD2 = wkV0qPa4icfH1S/Qd41wpRAL1rwl6iea
 Server = mlcrpacrc5836181bd9e.azurecr.io
+
+# Spark on HDInsight
+az ml computetarget attach cluster --name <myhdi> --address <myhdi-ssh.azurehdinsight.net> --username <sshusername> --password <sshpwd>
+az ml experiment prepare -c <myhdi>
