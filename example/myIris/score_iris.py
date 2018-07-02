@@ -39,18 +39,30 @@ def run(input_df):
     n = 40
     random_state = np.random.RandomState(0)
     n_samples, n_features = input_df.shape
-    input_df = np.c_[input_df, random_state.randn(n_samples, n)]
-    inputs_dc.collect(input_df)
+    _input_df = input_df.iloc[:, 0:4]
+    _input_df = np.c_[_input_df, random_state.randn(n_samples, n)]
+    inputs_dc.collect(_input_df)
 
     # make prediction using the model
-    pred = model.predict(input_df)
+    pred = model.predict(_input_df)
     prediction_dc.collect(pred)
     
     # return all predictions
     # return json.dumps(pred.tolist())
     
+    results = {
+        "Prediction": str(pred[0]),
+        "sepal length": input_df.iloc[0,0],
+        "sepal width": input_df.iloc[0,1],
+        "petal length": input_df.iloc[0,2],
+        "petal width": input_df.iloc[0,3],
+        "Location": input_df.iloc[0,4],
+        "Timestamp": input_df.iloc[0,5]
+    }
+    
     # return just the first prediction
-    return json.dumps(str(pred[0]))
+    return json.dumps(str(results))
+
 
 def main():
   from azureml.api.schema.dataTypes import DataTypes
@@ -58,14 +70,14 @@ def main():
   from azureml.api.realtime.services import generate_schema
   import pandas
   
-  df = pandas.DataFrame(data=[[3.0, 3.6, 1.3, 0.25]], columns=['sepal length', 'sepal width','petal length','petal width'])
+  df = pandas.DataFrame(data=[[3.0, 3.6, 1.3, 0.25, "Beijing", "06/28/2018"]], columns=['sepal length', 'sepal width','petal length','petal width', 'Location', 'Timestamp'])
 
   # Turn on data collection debug mode to view output in stdout
   os.environ["AML_MODEL_DC_DEBUG"] = 'true'
 
   # Test the output of the functions
   init()
-  input1 = pandas.DataFrame([[3.0, 3.6, 1.3, 0.25]])
+  input1 = pandas.DataFrame([[3.0, 3.6, 1.3, 0.25, "Beijing", "06/28/2018"]])
   print("Result: " + run(input1))
   
   inputs = {"input_df": SampleDefinition(DataTypes.PANDAS, df)}

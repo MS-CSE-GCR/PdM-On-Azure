@@ -23,6 +23,13 @@ az ml model register --model model.pkl --name model.pkl
 az ml manifest create --manifest-name <new manifest name> -f score_iris.py -r python -i <model ID> -s service_schema.json -c aml_config\conda_dependencies.yml
 az ml image create -n irisimage --manifest-id <manifest ID>
 
+
+## Create real time web service in one command
+az ml service create realtime -f score_iris.py --model-file model.pkl -s service_schema.json -n irisapp -r python --collect-model-data true -c aml_config\conda_dependencies.yml
+
+az ml image usage -i <imageID>
+az ml env get-credentials -g <resource group name> -n <deployment account>
+
 # namespace register
 az provider register --namespace <namespace ex. Microsoft.Storage>
 az provider show -n <namespace>
