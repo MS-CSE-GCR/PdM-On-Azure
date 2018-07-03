@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 39,
+  "id": "46e9738e-e114-43aa-b358-f4a1dc01081c",
+  "activities": [
+    {
+      "id": "470e852f-b475-4d16-a585-ec8cfbfd86ff",
+      "name": "iris",
+      "blocks": [
+        {
+          "id": "862b0e09-9cd2-43cc-a12e-df7374b09c69",
+          "type": "Microsoft.DPrep.DataSourceBlock",
+          "arguments": {
+            "path": {
+              "target": 1,
+              "resourceDetails": [
+                {
+                  "path": "https://pdms.blob.core.windows.net/azureml/iris.csv",
+                  "sas": {
+                    "id": "https://pdms.blob.core.windows.net/azureml/iris.csv",
+                    "secretType": "AzureMLSecret"
+                  },
+                  "storageAccountName": "pdms",
+                  "storageAccountKey": {
+                    "id": "pdms",
+                    "secretType": "AzureMLSecret"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "c7620d60-6480-4cb4-b0c4-14438947582a",
+          "type": "Microsoft.DPrep.ParseDelimitedBlock",
+          "arguments": {
+            "preview": false,
+            "columnHeadersMode": 0,
+            "separator": ",",
+            "fileEncoding": 0,
+            "skipRowsMode": 0,
+            "handleQuotedLineBreaks": false
+          }
+        },
+        {
+          "id": "f0e24204-47db-43ee-824f-5a95e22dae5a",
+          "type": "Microsoft.DPrep.SetColumnTypesBlock",
+          "arguments": {
+            "columnConversion": [
+              {
+                "columnId": "Column1",
+                "typeProperty": 3,
+                "typeArguments": {}
+              },
+              {
+                "columnId": "Column3",
+                "typeProperty": 3,
+                "typeArguments": {}
+              },
+              {
+                "columnId": "Column4",
+                "typeProperty": 3,
+                "typeArguments": {}
+              },
+              {
+                "columnId": "Column2",
+                "typeProperty": 3,
+                "typeArguments": {}
+              }
+            ]
+          }
+        },
+        {
+          "id": "4eeed164-f3e8-4863-af9a-d35561993147",
+          "type": "Microsoft.DPrep.SampleBlock",
+          "arguments": {
+            "samples": [
+              {
+                "sampleId": "142d8ca4-5b24-455b-9c1c-49ae474b43b3",
+                "sampleRevision": "cbe51a92-1fea-4243-9ef0-42d11ff0f353",
+                "sampleName": "Full File",
+                "sampleRunner": {
+                  "id": null,
+                  "type": 0
+                },
+                "remoteGeneratorProperties": {},
+                "sampleStrategy": 3,
+                "topArguments": {
+                  "sampleCount": 10000
+                },
+                "randomNArguments": {
+                  "sampleCount": 10000
+                },
+                "randomPercentArguments": {
+                  "probability": 0.1
+                },
+                "allowAutoGen": true,
+                "isDisabled": false
+              }
+            ],
+            "activeSample": "142d8ca4-5b24-455b-9c1c-49ae474b43b3"
+          }
+        },
+        {
+          "id": "f5972393-b744-4737-a866-2526e2f470a2",
+          "type": "Microsoft.DPrep.HandlePathColumnBlock",
+          "arguments": {
+            "pathColumnOperation": 0
+          }
+        }
+      ],
+      "inspectors": [
+        {
+          "id": "80f18ae7-a4de-414b-96d5-e67f79e2a501",
+          "type": "Microsoft.DPrep.DataQualityInspector",
+          "arguments": {},
+          "reference": {
+            "referenceType": 0,
+            "referenceContainerPath": null,
+            "referencedActivityId": "470e852f-b475-4d16-a585-ec8cfbfd86ff",
+            "referencedBranchId": null,
+            "referencedStep": {
+              "stepReferenceType": 1,
+              "referencedStepId": null,
+              "fallback": 1
+            },
+            "anonymousSteps": null
+          },
+          "isBackground": false
+        },
+        {
+          "id": "ea769f1f-1f03-4d78-8dcb-571651386172",
+          "type": "Microsoft.DPrep.DataProfileInspector",
+          "arguments": {},
+          "reference": {
+            "referenceType": 0,
+            "referenceContainerPath": null,
+            "referencedActivityId": "470e852f-b475-4d16-a585-ec8cfbfd86ff",
+            "referencedBranchId": null,
+            "referencedStep": {
+              "stepReferenceType": 0,
+              "referencedStepId": "f5972393-b744-4737-a866-2526e2f470a2",
+              "fallback": 1
+            },
+            "anonymousSteps": null
+          },
+          "isBackground": true
+        }
+      ]
+    }
+  ],
+  "runConfigurations": []
+}

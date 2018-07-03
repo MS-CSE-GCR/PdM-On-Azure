@@ -12,6 +12,10 @@ from pyspark.ml.feature import *
 
 from azureml.logging import get_azureml_logger
 
+import pickle
+import inspect, os
+from azure.storage.blob import BlockBlobService, PublicAccess
+
 # initialize logger
 run_logger = get_azureml_logger() 
 
@@ -25,7 +29,19 @@ print ('Spark version: {}'.format(spark.version))
 print ('****************')
 
 # load iris.csv into Spark dataframe
-data = spark.createDataFrame(pd.read_csv('iris.csv', header=None, names=['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']))
+dataFile = "iris.csv"
+if not os.path.isfile(dataFile):
+    local_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    block_blob_service = BlockBlobService(
+        account_name='pdms', 
+        account_key='0+fcK61ROcuGbQQ9MdY0tNtb/tnxpeNuskQWAew1gufb3Fld+BOJkDa6LOZkw6RQW0oo3Z5fIMJu5HthFc/dQA=='
+        )
+    block_blob_service.get_blob_to_path(
+        "azureml", 
+        dataFile, 
+        os.path.join(local_path , dataFile)
+    )
+data = spark.createDataFrame(pd.read_csv(dataFile, header=None, names=['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']))
 print("First 10 rows of Iris dataset:")
 data.show(10)
 
@@ -76,3 +92,9 @@ print()
 
 # log accuracy
 run_logger.log('Accuracy', accuracy)
+
+# serialize the model on disk in the special 'outputs' folder
+print ("Export the model to model.pkl")
+f = open('./outputs/model.pkl', 'wb')
+pickle.dump(model, f)
+f.close()

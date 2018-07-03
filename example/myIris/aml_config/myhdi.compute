@@ -1,0 +1,5 @@
+address: rochespark-ssh.azurehdinsight.net
+password: AzureMlSecret=myhdi#sshuser#73a4232558ff4c45af06e7a7863c809f
+type: cluster
+username: sshuser
+yarnDeployMode: cluster

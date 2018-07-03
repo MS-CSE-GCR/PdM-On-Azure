@@ -11,7 +11,16 @@ This is a template for PdM on Azure
     * IoT Hub
     * IoT Edge
 
+## Prerequisites
+If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+To complete this tutorial, you must have:
+- An Azure Machine Learning Experimentation account
+- Azure Machine Learning Workbench installed
+- A Docker engine installed and running locally. Docker's Community Edition is sufficient. Learn how to install Docker [here](https://docs.docker.com/engine/installation/).
+
 ## Environment Setup
+
+# Use Data Science Virtual Machine (RECOMMENDED)
 1. Create a new DSVM windows 2016 with CPU following the [Documentation](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/provision-vm)
 2. After creation of DSVM, use RDP to connect to the VM;
 3. Install Azure Machine Learning Workbench using the `AmlWorkbenchSetup.exe` on the Desktop and it takes about 10-20 minutes to finish the installation.
@@ -34,7 +43,30 @@ This is a template for PdM on Azure
 
         4.1.5. Reload or relaunch AML workbench
 
+# Use Local PC
+1. Install Azure Machine Learning Workbench by following the [tutorial](https://docs.microsoft.com/en-us/azure/machine-learning/service/quickstart-installation
+). It takes about 20-30 minutes to finish the installation.
+
+2. Reload or relaunch AML workbench
+
+## Machine Learning Model Training
+1. Clone the GitHub repo to your local path: 
+   
+   git clone https://github.com/MS-CSE-GCR/PdM-On-Azure.git
+   cd PdM-On-Azure
+
+2. In Azure Machine Learning Workbench, `+` - `Add Existing Folder as Project` -  Browse to ./example/myIris and Create the project;
+
+3. [Data Preparation](https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/tutorial-classifying-iris-part-1)
+
+4. [Model Building](https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/tutorial-classifying-iris-part-2)
+
+5. [Model Deployment](https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/tutorial-classifying-iris-part-3)
+
+6. After you
+
 ## Good Reference
 * [How to read/write files](https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/how-to-read-write-files)
 * [How to use MMLSpark](https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/how-to-use-mmlspark)
+* [Create DSVM and HDI Spark Cluster](https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/how-to-create-dsvm-hdi#create-an-apache-spark-for-azure-hdinsight-cluster-in-azure-portal)
 
