@@ -93,8 +93,21 @@ print()
 # log accuracy
 run_logger.log('Accuracy', accuracy)
 
-# serialize the model on disk in the special 'outputs' folder
-print ("Export the model to model.pkl")
-f = open('./outputs/model.pkl', 'wb')
-pickle.dump(model, f)
-f.close()
+# create the outputs folder
+os.makedirs('./outputs', exist_ok=True)
+
+print("******** SAVE THE MODEL ***********")
+model.write().overwrite().save("./outputs/iris.mml")
+
+# create web service schema
+from azureml.api.schema.dataTypes import DataTypes
+from azureml.api.schema.sampleDefinition import SampleDefinition
+from azureml.api.realtime.services import generate_schema
+
+# Define the input dataframe
+sample = spark.createDataFrame([(3.0, 3, 1, 0.25, "Beijing", "06/28/2018")],['sepal length', 'sepal width','petal length','petal width', 'Location', 'Timestamp'])
+inputs = {"input_df": SampleDefinition(DataTypes.SPARK, sample)}
+
+# Create the schema file (service_schema.json) the the output folder.
+import score_mmlspark
+generate_schema(run_func=score_mmlspark.run, inputs=inputs, filepath='./outputs/service_schema.json')

@@ -52,12 +52,12 @@ def run(input_df):
     
     results = {
         "Prediction": str(pred[0]),
-        "sepal length": input_df.iloc[0,0],
-        "sepal width": input_df.iloc[0,1],
-        "petal length": input_df.iloc[0,2],
-        "petal width": input_df.iloc[0,3],
-        "Location": input_df.iloc[0,4],
-        "Timestamp": input_df.iloc[0,5]
+        "sepal length": float(input_df.iloc[0,0]),
+        "sepal width": float(input_df.iloc[0,1]),
+        "petal length": float(input_df.iloc[0,2]),
+        "petal width": float(input_df.iloc[0,3]),
+        "Location": str(input_df.iloc[0,4]),
+        "Timestamp": str(input_df.iloc[0,5])
     }
     
     # return just the first prediction
@@ -70,14 +70,14 @@ def main():
   from azureml.api.realtime.services import generate_schema
   import pandas
   
-  df = pandas.DataFrame(data=[[3.0, 3.6, 1.3, 0.25, "Beijing", "06/28/2018"]], columns=['sepal length', 'sepal width','petal length','petal width', 'Location', 'Timestamp'])
+  df = pandas.DataFrame(data=[[3.0, 3, 1, 0.25, "Beijing", "06/28/2018"]], columns=['sepal length', 'sepal width','petal length','petal width', 'Location', 'Timestamp'])
 
   # Turn on data collection debug mode to view output in stdout
   os.environ["AML_MODEL_DC_DEBUG"] = 'true'
 
   # Test the output of the functions
   init()
-  input1 = pandas.DataFrame([[3.0, 3.6, 1.3, 0.25, "Beijing", "06/28/2018"]])
+  input1 = pandas.DataFrame([[3.0, 3, 1, 0.25, "Beijing", "06/28/2018"]])
   print("Result: " + run(input1))
   
   inputs = {"input_df": SampleDefinition(DataTypes.PANDAS, df)}
