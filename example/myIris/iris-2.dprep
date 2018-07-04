@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 39,
+  "id": "c99e8208-db19-49a6-9669-1d42d4dbaeca",
+  "activities": [
+    {
+      "id": "7c63f2d0-9626-4d13-9c37-e06c470e5f55",
+      "name": "iris",
+      "blocks": [
+        {
+          "id": "3bfe5848-3869-4f30-8c28-50dc21e94a0b",
+          "type": "Microsoft.DPrep.ReferenceActivityBlock",
+          "arguments": {
+            "reference": {
+              "referenceType": 1,
+              "referenceContainerPath": "./iris-1.dsource",
+              "referencedActivityId": "470e852f-b475-4d16-a585-ec8cfbfd86ff",
+              "referencedBranchId": null,
+              "referencedStep": null,
+              "anonymousSteps": null
+            }
+          }
+        },
+        {
+          "id": "d4e1e056-262d-4cf5-bf8b-cf6ddd0cfe8c",
+          "type": "Microsoft.DPrep.FilterStringColumnBlock",
+          "arguments": {
+            "columnId": "Column5",
+            "filterResult": 1,
+            "clauseRelationship": 1,
+            "clauses": [
+              {
+                "operator": 2
+              }
+            ]
+          }
+        }
+      ],
+      "inspectors": [
+        {
+          "id": "bb7720c8-a3ed-4d8b-ae92-2b9e6585d5b7",
+          "type": "Microsoft.DPrep.DataQualityInspector",
+          "arguments": {},
+          "reference": {
+            "referenceType": 0,
+            "referenceContainerPath": null,
+            "referencedActivityId": "7c63f2d0-9626-4d13-9c37-e06c470e5f55",
+            "referencedBranchId": null,
+            "referencedStep": {
+              "stepReferenceType": 1,
+              "referencedStepId": null,
+              "fallback": 1
+            },
+            "anonymousSteps": null
+          },
+          "isBackground": false
+        },
+        {
+          "id": "61241e53-990b-45df-b787-38e532121ab4",
+          "type": "Microsoft.DPrep.ValueCountInspector",
+          "arguments": {
+            "columnId": "Column5",
+            "numberOfTopValues": 6,
+            "descending": true,
+            "includeNulls": true,
+            "haloEffect": true,
+            "logScale": false
+          },
+          "reference": {
+            "referenceType": 0,
+            "referenceContainerPath": null,
+            "referencedActivityId": "7c63f2d0-9626-4d13-9c37-e06c470e5f55",
+            "referencedBranchId": null,
+            "referencedStep": {
+              "stepReferenceType": 1,
+              "referencedStepId": null,
+              "fallback": 1
+            },
+            "anonymousSteps": null
+          },
+          "isBackground": true
+        }
+      ]
+    }
+  ],
+  "runConfigurations": []
+}

@@ -61,30 +61,31 @@ def run(input_df):
     }
     
     # return just the first prediction
-    return json.dumps(results)
-
+    # return json.dumps(results)
+    return results
 
 def main():
-  from azureml.api.schema.dataTypes import DataTypes
-  from azureml.api.schema.sampleDefinition import SampleDefinition
-  from azureml.api.realtime.services import generate_schema
-  import pandas
+    from azureml.api.schema.dataTypes import DataTypes
+    from azureml.api.schema.sampleDefinition import SampleDefinition
+    from azureml.api.realtime.services import generate_schema
+    import pandas
+    import json
   
-  df = pandas.DataFrame(data=[[3.0, 3, 1, 0.25, "Beijing", "06/28/2018"]], columns=['sepal length', 'sepal width','petal length','petal width', 'Location', 'Timestamp'])
+    df = pandas.DataFrame(data=[[3.0, 3, 1, 0.25, "Beijing", "06/28/2018"]], columns=['sepal length', 'sepal width','petal length','petal width', 'Location', 'Timestamp'])
 
-  # Turn on data collection debug mode to view output in stdout
-  os.environ["AML_MODEL_DC_DEBUG"] = 'true'
+    # Turn on data collection debug mode to view output in stdout
+    os.environ["AML_MODEL_DC_DEBUG"] = 'true'
 
-  # Test the output of the functions
-  init()
-  input1 = pandas.DataFrame([[3.0, 3, 1, 0.25, "Beijing", "06/28/2018"]])
-  print("Result: " + run(input1))
+    # Test the output of the functions
+    init()
+    input1 = pandas.DataFrame([[3.0, 3, 1, 0.25, "Beijing", "06/28/2018"]])
+    print("Result: " + json.dumps(run(input1)))
   
-  inputs = {"input_df": SampleDefinition(DataTypes.PANDAS, df)}
+    inputs = {"input_df": SampleDefinition(DataTypes.PANDAS, df)}
   
-  #Genereate the schema
-  generate_schema(run_func=run, inputs=inputs, filepath='./outputs/service_schema_1.json')
-  print("Schema generated")
+    #Genereate the schema
+    generate_schema(run_func=run, inputs=inputs, filepath='./outputs/service_schema_1.json')
+    print("Schema generated")
 
 if __name__ == "__main__":
     main()
