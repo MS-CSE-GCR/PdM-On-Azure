@@ -47,3 +47,6 @@ az iot hub create --resource-group <resource group name> --name <iot hub name> -
 #### Spark on HDInsight
 az ml computetarget attach cluster --name <myhdi> --address <myhdi-ssh.azurehdinsight.net> --username <sshusername> --password <sshpwd>
 az ml experiment prepare -c <myhdi>
+
+#### Spark Deployment
+az ml service create realtime -f score_iris.py -m iris.mml -s service_schema_spark.json -r spark-py -n irismml -c aml_config/conda_dependencies.yml
