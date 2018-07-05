@@ -1,0 +1,79 @@
+{
+  "moduleContent": {
+    "$edgeAgent": {
+      "properties.desired": {
+        "schemaVersion": "1.0",
+        "runtime": {
+          "type": "docker",
+          "settings": {
+            "minDockerVersion": "v1.25",
+            "loggingOptions": "",
+            "registryCredentials": {
+              "bocontainerregistry": {
+                "username": "BoContainerRegistry",
+                "password": "rpCNjEY0qetLRXQ70=yRpHx7Kvq7dmRh",
+                "address": "bocontainerregistry.azurecr.io"
+              },
+              "mlcrpacr9ce66051d70c": {
+                "address": "mlcrpacr9ce66051d70c.azurecr.io",
+                "password": "b1RUfAq9/tBmqRwn9OOkaU3GZUpdpHkW",
+                "username": "mlcrpacr9ce66051d70c"
+              }
+            }
+          }
+        },
+        "systemModules": {
+          "edgeAgent": {
+            "type": "docker",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-agent:1.0",
+              "createOptions": ""
+            }
+          },
+          "edgeHub": {
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
+              "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
+            }
+          }
+        },
+        "modules": {
+          "newirisapp": {
+            "type": "docker",
+            "settings": {
+              "image": "mlcrpacr9ce66051d70c.azurecr.io/irisapp:3",
+              "createOptions": "{\n  \"HostConfig\": {\n    \"PortBindings\": {\n      \"8883/tcp\": [\n        {\n          \"HostPort\": \"3883\"\n        }\n      ],\n      \"5001/tcp\": [\n        {\n          \"HostPort\": \"3001\"\n        }\n      ],\n      \"8888/tcp\": [\n        {\n          \"HostPort\": \"3888\"\n        }\n      ]\n    }\n  }\n}"
+            },
+            "version": "1.0",
+            "status": "running",
+            "restartPolicy": "always"
+          },
+          "CSharpModule": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "bocontainerregistry.azurecr.io/csharpmodule:0.2.5-amd64",
+              "createOptions": ""
+            }
+          }
+        }
+      }
+    },
+    "$edgeHub": {
+      "properties.desired": {
+        "schemaVersion": "1.0",
+        "routes": {
+          "CSharpModuleToIoTHub": "FROM /messages/modules/CSharpModule/outputs/output1 INTO $upstream"
+        },
+        "storeAndForwardConfiguration": {
+          "timeToLiveSecs": 7200
+        }
+      }
+    }
+  }
+}
