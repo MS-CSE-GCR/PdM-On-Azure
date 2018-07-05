@@ -14,7 +14,7 @@ def init():
 
     # load the model file using link file reference
     # local_path = get_local_path('mmlspark_model/AdultCensusModel.link')
-    local_path = "./outputs/iris.mml"
+    local_path = "./iris.mml"
     print(local_path)
     
     trainedModel = TrainedClassifierModel.load(local_path)
